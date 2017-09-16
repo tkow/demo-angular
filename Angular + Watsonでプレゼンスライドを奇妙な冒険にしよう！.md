@@ -86,7 +86,26 @@ npm install
 
 ## 4. 認証用APIを作成する
 
-### 4.1 認証用APIのエンドポイントを設定する
+### 4.1 Watson Speech To Text用の認証情報を取得する
+
+まずサービス用の認証情報を作成します。 [Bluemixコンソール](https://console.bluemix.net)の左上メニューよりWatsonサービスを選択します。
+
+![watson-catalog.png](images/watson-catalog.png "watson-catalog.png")
+
+Watsonサービスの作成を押下後のリストよりSpeech To Textを選択します。
+
+ここでアプリ名は`sample-stt-application`など判別できる名前をつけてください。
+
+サービス資格情報から先ほど作成した資格情報のアクション[資格情報の表示]を選択すると以下のような画面が表示されます。
+
+
+![credentail.png](images/credential.png "credential.png")
+
+
+このjsonデータは後ほどcredentail.jsonというファイルに書き写します。これで準備完了です。
+
+
+### 4.2 認証用APIのエンドポイントを設定する
 
 AngularプロジェクトはTypeScriptでの開発が主流であるため、ここでは、認証用APIのモジュールはTypeScriptで作ることにします。また、ExpressサーバーはES6で書くことにします。これは、tsconfig.jsonの設定をすることで、ESモジュールを読み込めるようにすることで、TypescriptとESどちらも読み込めるようになります。ここでは、Typescriptを実行できる環境としてts-nodeとtypescirptをインストールします。加えてExpressもインストールしておきましょう。body-parserはexpressのテンプレートエンジン拡張用のプラグインです。(最新版のangular-cliでは、ts-node、typescriptはpacakge.jsonに最初から入っていますのであればインストールは不要です。)
 
@@ -127,7 +146,7 @@ app.get('/auth', function(req, res, next) {
 ```
 ここで、httpモジュールはnodeの標準ライブラリになります。staticは、server/index.jsからexpress.staticはtemplateやjsに対するパスを解決して呼び出せるようにします。ここでは、Angularアプリケーションのbuild済みのファイルは全てdistディレクトリに配置されるため、distディレクトリを指定しておき、後ほどindex.htmlを読み込めるようにします。 watsonAuthServiceはエンドポイント/authにGETメソッドでリクエストが送られた際にWatsonのアクセストークンを取得できるようにするモジュールで後ほど実装します。これで最低限のserverの準備が出来ました。次に上述のwatsonAuthServiceを実装します。
 
-### 4.2 認証用APIを実装する
+### 4.3 認証用APIを実装する
 
 serverディレクトリに、watson-auth-service.tsを作成し、実装します。ここで、実装に入る前にwatson-developer-cloudモジュールをインストールしておきます。
 
@@ -161,7 +180,7 @@ export function getAuthToken(): Promise<string> {
 ```
 
 以上のファイルは、serverディレクトリの中にあるcredential.jsonというファイルからjson形式で、Watsonのアカウント情報を取得し、watson-developer-cloudモジュールにセットするようにしています。
-そして、その認証情報を使用し、ユーザーにアクセストークンを取得させる処理を作成しています。よって、3.1節の画像にある、url、username、passwordを記述したcredential.jsonというファイルをserverディレクトリ配下に作成します。
+そして、その認証情報を使用し、ユーザーにアクセストークンを取得させる処理を作成しています。よって、4.1節の画像にある、url、username、passwordを記述したcredential.jsonというファイルをserverディレクトリ配下に作成します。
 
 ```json
 {
@@ -173,7 +192,7 @@ export function getAuthToken(): Promise<string> {
 
 これでcredential.jsonを作成できました。次に、Bluemix上のSpeech To Textを使用するためのアクセストークンが、ローカルサーバを起動して取得できるか確かめてみます。
 
-### 4.3 アクセストークンをローカルサーバを経由して取得する
+### 4.4 アクセストークンをローカルサーバを経由して取得する
 
 node.jsの実行環境ではカレントディレクトリにあるnode_modules内のnpmパッケージの実行ファイルのパスは`npm bin`というコマンドで取得できるようになっています。そのことを利用してnpmパッケージをグローバルインストールしなくても、以下のようにカレントディレクトリ内にローカルインストールされたのnpmパッケージの実行ファイルを実行する事ができます。以下の例では、ローカルインストールされたts-nodeを利用してserverを起動します。serverディレクトリ内にindex.jsを配置しているため、呼び出されるファイルはindex.jsになります。
 
@@ -187,14 +206,14 @@ $(npm bin)/ts-node server
 
 無事アクセストークンを取得することが出来たら、今度は、Bluemix上にExpressサーバをデプロイしてみましょう。
 
-### 4.4 Bluemix上のCloudFoundryにnode.jsアプリケーションをデプロイする
+### 4.5 Bluemix上のCloudFoundryにnode.jsアプリケーションをデプロイする
 
-### 4.4.1 Bluemix CLIをインストールする
+### 4.5.1 Bluemix CLIをインストールする
 [こちらのリンク](https://console.bluemix.net/docs/cli/reference/bluemix_cli/all_versions.html#bluemix-cli-)からBlumix CLIをインストールすることが出来ます。
 
 ＊ Cloud Foundry CLIのみを使ってデプロイすることも可能です。Bluemix CLIにはCloud Foundry CLIが内蔵されているため、どちらを使用しても構いません。ここでは、Bluemix CLIのコマンドを利用して、デプロイを行います。
 
-### 4.4.2 Cloud Foundryへのデプロイ設定を行う
+### 4.5.2 Cloud Foundryへのデプロイ設定を行う
 
 node.jsアプリケーションをデプロイするのは、とても簡単です。.cfignoreファイルにデプロイに不必要なファイル、ディレクトリを記述しておくと、デプロイ時に除外されるため、必要なファイルのみをデプロイする事ができます。また、node.jsのフロントエンド側のスクリプトは全てビルド済みのファイルだけデプロイすれば良いため、ビルド前のスクリプトや本番環境で使われないファイルやnode_modulesなどはデプロイから外しておくことで、デプロイ時間を短縮できます。それらを踏まえた上で、.cfignoreの内容は以下のようになります。
 
@@ -256,7 +275,7 @@ pathはmanifest.ymlのパスを基準にディレクトリを指定します。n
 NODE_ENV=production PORT=8080 ts-node server
 ```
 
-### 4.4.3 Cloud Foundryにデプロイを行う
+### 4.5.3 Cloud Foundryにデプロイを行う
 
 Cloud Foundryの管理画面に戻ると、デプロイ前のプロジェクトへのインストラクションがあります。はじめて、bluemixコマンドを利用する場合は、このインストラクションに従って、今まで利用したことがあり、ログイン情報の登録などが住んでいる場合は、好きな方法で設定しても構いません。
 
@@ -403,26 +422,7 @@ export class AppComponent {
 
 Service、Component、Module等を追加する際にapp.module.tsの設定は必須です。app.module.tsのうち、チュートリアルの過程で新しくAngularクラスを作成した場合は、その都度必要な設定をコピーして設定してください。
 
-### 6.1 Watson Speech to Textを利用する準備
-
-まずサービス用の認証情報を作成します。 [Bluemixコンソール](https://console.bluemix.net)の左上メニューよりWatsonサービスを選択します。
-
-![watson-catalog.png](images/watson-catalog.png "watson-catalog.png")
-
-Watsonサービスの作成を押下後のリストよりSpeech To Textを選択します。
-
-ここでアプリ名は`sample-stt-application`など判別できる名前をつけてください。
-
-サービス資格情報から先ほど作成した資格情報のアクション[資格情報の表示]を選択すると以下のような画面が表示されます。
-
-
-![credentail.png](images/credential.png "credential.png")
-
-
-このjsonデータは後ほどcredentail.jsonというファイルに書き写します。これで準備完了です。
-
-
-### 6.2 開発環境用にAngular用のサーバでExpressサーバのプロキシを行う
+### 6.1 開発環境用にAngular用のサーバでExpressサーバのプロキシを行う
 
 本番環境ではAngular SPAを配信するサーバをExpressに統合しますが、開発環境ではngコマンドを使用している限りAngular用の開発サーバとExpressサーバは別々に起動させて開発することになります。この時、ExpressにAngularコンポーネントから、Expressのサーバにリクエストを飛ばすためにエンドポイントを書き直したり環境変数を使うのは無駄なので、開発用のサーバにプロキシを設定します。ng serveはwebpack-devserverを内部にラップして動かしているので、proxy.config.json(任意の名前で大丈夫です)というファイルを以下の内容で作成して、プロジェクトのルートに配置します。
 
@@ -472,7 +472,7 @@ npm run server
 ```
 で同時にサーバを起動させ、同時にサーバを停止させることが出来るようになります。
 
-### 6.3 ブラウザからWatson Speech to Textを利用出来るようにする
+### 6.2 ブラウザからWatson Speech to Textを利用出来るようにする
 
 watson-speechというライブラリを使うため、インストールされていなければ以下を実行します。
 
