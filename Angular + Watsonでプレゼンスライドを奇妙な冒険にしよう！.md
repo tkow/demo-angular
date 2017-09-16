@@ -1125,7 +1125,7 @@ app.get('/', function(req, res, next) {
 
 ![fireworks.gif](images/fireworks.gif "fireworks.gif")
 
-このようにtemplateにcanvas要素を差し込むことで、Canvasを利用したリッチなアニメーションをつけることも出来ます。実装が気になる方は、ソースコードを見てみてください。
+このようにtemplateにcanvas要素を差し込むことで、Canvasを利用したリッチなアニメーションをつけることも出来ます。実装が気になる方は、ソースコードを覗いてみてください。
 
 
 ## 11. 終わりに
