@@ -8,22 +8,25 @@ import { SlidesComponent } from './slides/slides.component';
 import { SlideComponent } from './slides/slide/slide.component';
 
 import { SlidesService } from './slides/slides.service';
-import { SlideBusService } from './slides/slide-bus.service'
-// import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {EffectProviderBusService} from './effect-provider-bus.service';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
     AppComponent,
     SpeechTextComponent,
     SlidesComponent,
-    SlideComponent,
-    // BrowserAnimationsModule
+    SlideComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule
   ],
-  providers: [SlidesService, SlideBusService, SlidesService],
+  providers: [
+    SlidesService,
+    SlidesService,
+    EffectProviderBusService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

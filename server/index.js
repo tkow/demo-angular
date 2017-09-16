@@ -24,3 +24,7 @@ server.listen(port, process.env.OPENSHIFT_NODEJS_IP || process.env.IP || undefin
 app.get('/auth', function(req, res, next) {
   watsonAuthService.getAuthToken().then((token,err)=>res.json({token}));
 });
+
+app.get('/', function(req, res, next) {
+  res.render('index');
+});

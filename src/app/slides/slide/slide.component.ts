@@ -1,10 +1,10 @@
 import {HostBinding, Component, Input, Output, EventEmitter} from '@angular/core';
 import {trigger, animate, style, transition, animateChild, query} from '@angular/animations';
-import {SlideBusService} from '../slide-bus.service';
 
 @Component({
   selector: 'app-slide',
   templateUrl: './slide.component.html',
+  styleUrls: ['./slide.component.css'],
   animations: [
     trigger('nextAnimation', [
       transition(':enter', [
@@ -19,16 +19,5 @@ import {SlideBusService} from '../slide-bus.service';
 
 export class SlideComponent {
   @Input() html;
-  @Output('close')
-  public closeNotify = new EventEmitter();
-
   @HostBinding('@nextAnimation') next = false;
-
-  constructor(private _slideService: SlideBusService) {
-    _slideService.onOtherSlideOpen(this, () => this.close());
-  }
-
-  close() {
-    this.closeNotify.emit();
-  }
 }

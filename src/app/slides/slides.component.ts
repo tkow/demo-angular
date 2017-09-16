@@ -7,7 +7,6 @@ import {
   OnInit
 } from '@angular/core';
 import {trigger, animate, style, transition, animateChild, group, query, stagger} from '@angular/animations';
-import {SlideBusService} from './slide-bus.service';
 import {SlidesService} from './slides.service';
 import {SlideComponent} from './slide/slide.component';
 
@@ -23,7 +22,7 @@ export class SlidesComponent implements OnInit {
   currentIndex = 0;
   selectedSlide = null;
 
-  constructor(private _slideBusService: SlideBusService,
+  constructor(
               private _slideService: SlidesService,
             ) {
     this.slides = this._slideService.getAll();
