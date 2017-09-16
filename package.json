@@ -4,7 +4,8 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "NODE_ENV=production PORT=8080 ts-node server",
+    "server": "ts-node server | ng serve --proxy-config proxy.config.json && wait",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -12,18 +13,12 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^4.0.0",
-    "@angular/common": "^4.0.0",
-    "@angular/compiler": "^4.0.0",
-    "@angular/core": "^4.0.0",
-    "@angular/forms": "^4.0.0",
-    "@angular/http": "^4.0.0",
-    "@angular/platform-browser": "^4.0.0",
-    "@angular/platform-browser-dynamic": "^4.0.0",
-    "@angular/router": "^4.0.0",
-    "core-js": "^2.4.1",
-    "rxjs": "^5.1.0",
-    "zone.js": "^0.8.4"
+    "body-parser": "^1.18.0",
+    "express": "^4.15.4",
+    "ts-node": "~3.0.4",
+    "typescript": "~2.3.3",
+    "watson-developer-cloud": "^2.39.0",
+    "watson-speech": "^0.33.1"
   },
   "devDependencies": {
     "@angular/cli": "1.2.0-rc.0",
@@ -43,6 +38,21 @@
     "protractor": "~5.1.2",
     "ts-node": "~3.0.4",
     "tslint": "~5.3.2",
-    "typescript": "~2.3.3"
+    "typescript": "~2.3.3",
+    "@angular/animations": "^4.0.0",
+    "@angular/common": "^4.0.0",
+    "@angular/compiler": "^4.0.0",
+    "@angular/core": "^4.0.0",
+    "@angular/forms": "^4.0.0",
+    "@angular/http": "^4.0.0",
+    "@angular/platform-browser": "^4.0.0",
+    "@angular/platform-browser-dynamic": "^4.0.0",
+    "@angular/router": "^4.0.0",
+    "body-parser": "^1.18.1",
+    "core-js": "^2.4.1",
+    "express": "^4.15.4",
+    "rxjs": "^5.1.0",
+    "watson-developer-cloud": "^2.39.0",
+    "zone.js": "^0.8.4"
   }
 }
