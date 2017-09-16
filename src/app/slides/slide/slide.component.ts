@@ -1,5 +1,5 @@
-import {HostBinding, Component, Input, Output, EventEmitter} from '@angular/core';
-import {trigger, animate, style, transition, animateChild, query} from '@angular/animations';
+import {HostBinding, Component, Input} from '@angular/core';
+import {trigger, animate, style, transition, query} from '@angular/animations';
 
 @Component({
   selector: 'app-slide',

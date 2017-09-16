@@ -2,8 +2,6 @@ import {
   HostListener,
   Component,
   Input,
-  Output,
-  EventEmitter,
   OnInit
 } from '@angular/core';
 import {trigger, animate, style, transition, animateChild, group, query, stagger} from '@angular/animations';

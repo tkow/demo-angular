@@ -26,7 +26,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
   providers: [
     SlidesService,
     SlidesService,
-    EffectProviderBusService],
+    EffectProviderBusService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
