@@ -35,7 +35,7 @@ IBM Watsonアカウントへの登録を事前に行ってください。また�
 
 ![slide.gif](images/slide.gif "slide-gif")
 
-更にそこにWatsonAPIを組み合わせ、スライドに音声に合わせた漫画のようなおもしろいエフェクトがつくようにします。
+更にそこにWatsonAPIを組み合わせ、音声に合わせて漫画のようなエフェクトがスライドに入るようにします。
 
 ![jojo.gif](images/jojo.gif "jojo-gif")
 
