@@ -33,11 +33,11 @@ IBM Watsonアカウントへの登録を事前に行ってください。また�
 
 今回は以下のようにAngularでスライドアプリケーションを作ります。
 
-![jojo.gif](images/jojo.gif "jojo-gif")
+![slide.gif](images/slide.gif "slide-gif")
 
 更にそこにWatsonAPIを組み合わせて音声に合わせてスライドに面白いエフェクトをつけます。
 
-![jojo.gif](images/slide.gif "slide-gif")
+![jojo.gif](images/jojo.gif "jojo-gif")
 
 構成の実装は三段階に分かれます。第一段階ではWatson Speech To Textをユーザーが使用出来るようにするために、ExpressにAPIを用意して、WatsonのAPIトークンを発行できるようにしてWEBアプリケーションとして公開できるようにします。第二段階では、ブラウザからそのアクセストークンを使って、Watsonにアクセスして音声認識が出来るようにします。第三段階では、スライドプレゼン用のアプリケーションを作成し、実際のプレゼンで使われそうな言葉を認識させて、面白いエフェクトが出せるようにします。なお、先に完成物が気になった方は[こちら](https://github.com/motohashi/ng-slide)を御覧ください。
 
